@@ -1,0 +1,34 @@
+name: Manual Export Mouvements PM
+
+on: 
+  workflow_dispatch:
+    inputs:
+      startDate:
+        required: true
+        type: string
+      endDate:
+        required: true
+        type: string
+      selectedAccountsIds:
+        required: true
+        type: string
+
+
+jobs:
+  compte_snapshot:
+    name: Manual Export Mouvements PM
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+          bundler-cache: true
+      - run: |
+          echo [${{ github.event.inputs.startDate }},${{ github.event.inputs.endDate }},${{ github.event.inputs.selectedAccountsIds }}]
+        env:
+          RAILS_ENV: production
+          RAILS_MASTER_KEY: '${{ secrets.RAILS_MASTER_KEY }}'
+          DATABASE_URL: '${{ secrets.DATABASE_URL }}'
