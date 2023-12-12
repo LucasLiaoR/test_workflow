@@ -27,7 +27,7 @@ jobs:
           ruby-version: 3.2.2
           bundler-cache: true
       - run: |
-          echo [${{ github.event.inputs.startDate }},${{ github.event.inputs.endDate }},${{ github.event.inputs.selectedAccountsIds }}]
+          ruby test.rb ${{ github.event.inputs.startDate }} ${{ github.event.inputs.endDate }} ${{ github.event.inputs.selectedAccountsIds }}
         env:
           RAILS_ENV: production
           RAILS_MASTER_KEY: '${{ secrets.RAILS_MASTER_KEY }}'
