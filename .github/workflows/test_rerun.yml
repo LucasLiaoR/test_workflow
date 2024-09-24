@@ -17,7 +17,8 @@ jobs:
           bundler-cache: true
       - run: |
           initial_date="${{ github.event.workflow_run.created_at }}"
-          echo "Initial job date: ${{ github.event }}"
+          ruby -e "puts ${{ github.event }}"
+          echo "Initial job date: ${{ github.event.workflow_run }}"
           formatted_date=$(date -d "$initial_date" '+%Y-%m-%d %H:%M:%S')
           echo "Formatted initial job date: $formatted_date"
         env:
