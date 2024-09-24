@@ -1,0 +1,25 @@
+name: Test rerun
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  test_rerun:
+    name: Test rerun
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+          bundler-cache: true
+      - run: |
+          initial_date="${{ github.event.workflow_run.created_at }}"
+          formatted_date=$(date -d "$initial_date" '+%Y-%m-%d %H:%M:%S')
+          echo "Formatted initial job date: $formatted_date"
+        env:
+          RAILS_ENV: production
+          RAILS_MASTER_KEY: '${{ secrets.RAILS_MASTER_KEY }}'
+          DATABASE_URL: '${{ secrets.DATABASE_URL }}'
